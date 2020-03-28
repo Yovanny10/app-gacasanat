@@ -1,0 +1,15 @@
+<ActionBar title="Estudiantes">
+</ActionBar>
+
+<GridLayout>
+    <ListView [items]="estudiantes">
+        <ng-template let-item="item">            
+            <StackLayout>
+                <Label [text]="item.nombre"></Label>
+                <Label [text]="item.apellido"></Label>
+                <Label [text]="item.telefono"></Label>
+            </StackLayout>        
+        </ng-template>
+    </ListView>
+    <Button text="Salir" (tap)="salir()" class="btn btn-primary"></Button>
+</GridLayout>
