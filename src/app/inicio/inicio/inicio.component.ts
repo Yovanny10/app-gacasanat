@@ -11,14 +11,14 @@ import { EstudianteService }from "../../shared/estudiante.service";
 export class InicioComponent implements OnInit {
 
   constructor(private routerExtensions: RouterExtensions,
-    private estudianteService:EstudianteService) { }
+    private estudianteService: EstudianteService) { }
     estudiantes: Array<Estudiante>;
 
   ngOnInit(): void {
     this.estudianteService.getEstudiantes()
     .subscribe( (result:any) =>{
       console.log(result);    
-      this.estudiantes= result.estudiante;      
+      this.estudiantes= result.estudiantes;      
     }, (error) =>{
       this.alert(error.error.message);
     });

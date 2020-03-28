@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     }
     this.loginService.autenticar({email: this.user.email,password: this.user.contrasenia})
     .subscribe( (result:any) =>{
-      //console.log(result);
+      console.log(result);
       //console.log(JSON.parse(result.toString()).token.access_token);
       setString("token",result.token.access_token);
       this.routerExtensions.navigate(["/inicio"],{clearHistory: true});
