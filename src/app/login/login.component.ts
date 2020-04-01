@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterExtensions } from "nativescript-angular/router";
-import { User } from "../model/user";
+import { Usuario } from "../model/usuario";
 import { LoginService } from "../shared/login.service";
 import { setString } from "tns-core-modules/application-settings";
+import { ActivityIndicator } from "tns-core-modules/ui/activity-indicator";
+import { EventData } from "tns-core-modules/data/observable";
+import { Page } from "tns-core-modules/ui/page";
 
 @Component({
   selector: 'ns-login',
@@ -10,11 +13,13 @@ import { setString } from "tns-core-modules/application-settings";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  user: User;
-  constructor(private routerExtensions: RouterExtensions, private loginService: LoginService) {
-    this.user = new User();
-    this.user.email="yovanny@gmail.com";
-    this.user.contrasenia="1234";
+  usuario: Usuario;
+  isBusy: boolean = false;
+  constructor(private routerExtensions: RouterExtensions, private loginService: LoginService, private page:Page) {
+    this.usuario = new Usuario();
+    this.usuario.email="yovanny@gmail.com";
+    this.usuario.password="1234";
+    this.page.actionBarHidden = true;
    }
 
   ngOnInit(): void {
@@ -22,19 +27,23 @@ export class LoginComponent implements OnInit {
 
   ingresar()
   {
-    if(!this.user.email || !this.user.contrasenia)
+    this.isBusy=true; 
+
+    if(!this.usuario.email || !this.usuario.password)
     {
       this.alert("Debe ingresar un correo y una contraseña");
       return;
     }
-    this.loginService.autenticar({email: this.user.email,password: this.user.contrasenia})
+    this.loginService.autenticar({email: this.usuario.email,password: this.usuario.password})
     .subscribe( (result:any) =>{
-      console.log(result);
+      //console.log(result);
       //console.log(JSON.parse(result.toString()).token.access_token);
       setString("token",result.token.access_token);
+      this.isBusy=false;
       this.routerExtensions.navigate(["/inicio"],{clearHistory: true});
     }, (error) =>{
-      this.alert(error.error.message);      
+      this.alert(error.error.message); 
+      this.isBusy=false;     
     });
 
     
@@ -46,6 +55,11 @@ export class LoginComponent implements OnInit {
      title: "Ejemplo Login",
      okButtonText: "OK",
      message: message });
+  }
+
+  onBusyChanged(args: EventData) {
+    let indicator: ActivityIndicator = <ActivityIndicator>args.object;
+    console.log("indicator.busy changed to: " + indicator.busy);
   }
 
 }

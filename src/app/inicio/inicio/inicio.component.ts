@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterExtensions } from "nativescript-angular/router";
 import { Estudiante } from "../../model/estudiante";
 import { EstudianteService }from "../../shared/estudiante.service";
+import { clear } from "tns-core-modules/application-settings";
 
 @Component({
   selector: 'ns-inicio',
@@ -26,6 +27,7 @@ export class InicioComponent implements OnInit {
 
   salir()
   {
+    clear();
     this.routerExtensions.navigate(["/login"],{clearHistory: true});
   }
 
