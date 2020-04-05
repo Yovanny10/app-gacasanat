@@ -31,6 +31,12 @@ export class InicioComponent implements OnInit {
     this.routerExtensions.navigate(["/login"],{clearHistory: true});
   }
 
+  camara()
+  {
+    clear();
+    this.routerExtensions.navigate(["/inicio/camara"],{clearHistory: true});
+  }
+
   alert(message:string)
   {
     return alert({

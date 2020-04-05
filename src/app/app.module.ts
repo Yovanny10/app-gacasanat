@@ -22,7 +22,7 @@ import { LoginComponent } from './login/login.component';
         AppComponent,
         ItemsComponent,
         ItemDetailComponent,
-        LoginComponent
+        LoginComponent,
     ],
     providers: [],
     schemas: [

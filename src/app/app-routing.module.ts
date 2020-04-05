@@ -12,6 +12,7 @@ const routes: Routes = [
     { path: "items", component: ItemsComponent },
     { path: "item/:id", component: ItemDetailComponent },
     { path: "inicio", loadChildren: "./inicio/inicio.module#InicioModule" }
+   // { path: "camara", loadChildren: "./inicio/inicio.module#CamaraModule" }
 ];
 
 @NgModule({
