@@ -1,27 +1,31 @@
-<ActionBar title="Estudiantes">
-        <ActionItem
-        android.systemIcon="ic_menu_back" 
-        ios.position="right"
-        android.position="right"
-        (tap) ="salir()" text="Salir">
-        </ActionItem>
-        <ActionItem
-        android.systemIcon="ic_menu_camera" 
-        ios.position="right"
-        android.position="right"
-        (tap) ="camara()" text="Camara">
-        </ActionItem>
+<ActionBar title="Sensores RFID">
+    <ActionItem android.systemIcon="ic_menu_back" ios.position="right" android.position="right" (tap)="salir()"
+        text="Salir">
+    </ActionItem>
+    <ActionItem android.systemIcon="ic_menu_camera" ios.position="right" android.position="right" (tap)="camara()"
+        text="Camara">
+    </ActionItem>
 </ActionBar>
 
-<GridLayout>
-    <ListView [items]="estudiantes">
-        <ng-template let-item="item">            
-            <StackLayout>
-                <Label [text]="item.nombre"></Label>
-                <Label [text]="item.apellido"></Label>
-                <Label [text]="item.telefono"></Label>
-            </StackLayout>        
-        </ng-template>
-    </ListView>
- <!--     <Button text="Salir" (tap)="salir()" class="btn btn-primary"></Button>-->
-</GridLayout>
+<StackLayout>
+    <StackLayout height="600px" class="input-field">
+        <ListView [items]="rfidsensors">
+            <ng-template let-item="item">
+                <StackLayout>
+                    <Label [text]="item.idd"></Label>
+                    <Label [text]="item.texto"></Label>
+                </StackLayout>
+            </ng-template>
+        </ListView>
+    </StackLayout>
+
+    <StackLayout row="1" class="input-field">
+        <Label text="Acciones Leds"></Label>
+        <TextField [(ngModel)]="color" hint="color">
+        </TextField>
+        <TextField [(ngModel)]="state" hint="state">
+        </TextField>
+        <Button text="Accion Led" (tap)="encenderled()" class="btn btn-primary"></Button>
+    </StackLayout>
+
+</StackLayout>

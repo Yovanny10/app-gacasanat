@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterExtensions } from "nativescript-angular/router";
-import { Estudiante } from "../../model/estudiante";
-import { EstudianteService }from "../../shared/estudiante.service";
+//import { Estudiante } from "../../model/estudiante";
+//import { EstudianteService }from "../../shared/estudiante.service";
+import { SensorRFID } from "../../model/rfidsensor";
+import { SensorRFIDService }from "../../shared/rfidsensor.service";
+import { LedService }from "../../shared/leds.service";
 import { clear } from "tns-core-modules/application-settings";
+import { Usuario } from "../../model/usuario";
 
 @Component({
   selector: 'ns-inicio',
@@ -12,17 +16,26 @@ import { clear } from "tns-core-modules/application-settings";
 export class InicioComponent implements OnInit {
 
   constructor(private routerExtensions: RouterExtensions,
-    private estudianteService: EstudianteService) { }
-    estudiantes: Array<Estudiante>;
+    private sonserRFIDService: SensorRFIDService,
+    private ledService: LedService) {  }
+    rfidsensors: Array<SensorRFID>;
+    color:string = "";
+    state:string = "";
 
   ngOnInit(): void {
-    this.estudianteService.getEstudiantes()
+    this.sonserRFIDService.getSensorRFIDs()
     .subscribe( (result:any) =>{
       console.log(result);    
-      this.estudiantes= result.estudiantes;      
+      this.rfidsensors= result.rfidsensors;      
     }, (error) =>{
       this.alert(error.error.message);
     });
+  }
+
+  encenderled(){
+    console.log("color:"+this.color+this.state)
+    this.ledService.prenderled(this.color,parseInt(this.state,10));
+    
   }
 
   salir()
